@@ -1,0 +1,207 @@
+<head>
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        /* section {
+            width: 8.27in;
+            height: 11.7in;
+            border: 0.1px solid black;
+            margin: 0 auto;
+            font-size: 0.8em;
+            padding: 10px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+
+        } */
+
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        table thead {
+            font-weight: bolder;
+            padding: 5px;
+            border: 2px solid darkgray;
+        }
+
+        thead tr {
+            height: 40px;
+        }
+
+        .form {
+            width: 3%;
+            vertical-align: middle;
+        }
+
+        .rootLetters {
+            width: 12%;
+            vertical-align: middle;
+        }
+
+
+
+        .meaning {
+            width: 18%;
+        }
+
+        td.meaning {
+            text-align: left;
+            font-size: 0.8em;            
+        }
+
+        .nounForm {
+            width: 18%;
+        }
+
+        .passiveParticiple,
+        .activeParticiple {
+            width: 10%;
+        }
+
+        .pastTense, .presentTense {
+            width:10%;
+        }
+
+        td,
+        th {
+            border-left: 0.1px dotted darkgray;
+            padding: 5px;
+        }
+
+        td:last-child {
+            border-left: 0px;
+        }
+
+        tbody td {
+            height: 40px;
+            padding: 1px;
+            vertical-align: top;
+            padding-top: 5px;
+        }
+
+        tbody td {
+            border-bottom: 0.1px dotted darkgray;
+            color: #111;
+        }
+
+        .rootLettersStyle {
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        .rootLettersFrequency {
+            font-size: 0.6em;
+
+        }
+        .formStyle {
+            font-size: 0.8em;
+        }
+        .endRootRow {
+            border-bottom: 2px solid darkgray;
+        }
+    </style>
+    <script src="./roots.js"></script>
+    <script>
+        let rootsSortedByFrequency = Object.keys(rootsData).sort((a, b) => {
+            return rootsData[b].frequency - rootsData[a].frequency;
+        });
+
+        let rows = "";
+        for (let root of rootsSortedByFrequency) {
+            let currentRoot = rootsData[root];
+            let forms = Object.keys(currentRoot.forms);
+            let formsCount = forms.length;
+            for (let i = 0; i < formsCount; i++) {
+                rows +=
+                    `
+            <tr class=${i == (formsCount - 1) ? 'endRootRow' : 'simpleBorder'}>
+                    ${i > 0 ? '' : `<td class="rootLetters endRootRow" rowspan=${formsCount}>
+                       <span class="rootLettersStyle"> ${currentRoot.rootLetters}</span>
+                        <br />
+                        <span class="rootLettersFrequency">${currentRoot.frequency}</span>
+                    </td>`}
+                    <td class="form">
+                        <span class="formStyle">${forms[i]}</span>
+                        <br />
+                        <span class="rootLettersFrequency">${currentRoot.forms[forms[i]].frequency}</span>
+                    </td>
+                    <td class="meaning" lang="en" dir="ltr">
+                       ${currentRoot.forms[forms[i]].translation}
+                    </td>
+                    <td class="pastTense">
+                       ${currentRoot.forms[forms[i]].rootVerb}
+                    </td>
+                    <td class="presentTense">
+                        
+                    </td>
+                    <td class="nounForm">
+                        
+                    </td>
+                    <td class="activeParticiple">
+                        
+                    </td>
+                    <td class="passiveParticiple">
+                        
+                    </td>
+                    <td class="imperative">
+                        
+                    </td>
+                </tr>
+            `
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <section>
+        <table lang="ar" dir="rtl">
+            <thead>
+                <tr>
+                    <th class="rootLetters">
+                        فعل حرف
+                    </th>
+                    <th class="form">
+                        وزن
+                    </th>
+                    <th class="meaning">
+                        معنى
+                    </th>
+                    <th class="pastTense">
+                        ماضٍ
+                    </th>
+                    <th class="presentTense">
+                        مُضارِع
+                    </th>
+                    <th class="nounForm">
+                        مَصْدر
+                    </th>
+                    <th class="activeParticiple">
+                        فاعِل
+                    </th>
+                    <th class="passiveParticiple">
+                        مفْعُول
+                    </th>
+                    <th class="imperative">
+                        أَمْْر
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+
+        </table>
+    </section>
+    <script>
+        let tbody = document.getElementsByTagName("tbody")[0];
+        tbody.insertAdjacentHTML("beforeend", rows);
+    </script>
+</body>
